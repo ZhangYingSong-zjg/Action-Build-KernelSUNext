@@ -22,7 +22,7 @@ on:
           - oneplus_ace_pro_v
           - oneplus_11_b
           - oneplus_12r_b
-          - oneplus_ace2_pro_b
+          - oneplus_ace2_pro_w
           - oneplus_ace3_b
           - oneplus_open_b
           - oneplus_nord_ce4_b
@@ -39,17 +39,17 @@ on:
           - oneplus_pad2_b
           - oneplus_nord_ce5_b
           - oneplus_nord_5_b
-          - oneplus_ace5_pro_b
+          - oneplus_5_pro_b
           - oneplus_13_b
           - oneplus_13t_b
           - oneplus_13s_b
           - oneplus_pad_2_pro_b
           - oneplus_pad_3_b
-          - oneplus_ace5_race_b
-          - oneplus_ace5_ultra_b
+          - oneplus_5_r_b
+          - oneplus_5_ultra_b
           - oneplus_pad2_mt6991_b
-          - oneplus_ace_6
-          - oneplus_ace_6t
+          - oneplus__6
+          - oneplus__6t
           - oneplus_15r
           - oneplus_15
       SUSFS_CI:
@@ -125,7 +125,7 @@ on:
         description: "是否拉取SUSFS-DEV分支？"
         required: true
         default: false
-      SPACE_NOCLEAN:
+      SP_NOCLEAN:
         type: boolean
         description: "是否停用空间清扫？"
         required: true
@@ -149,9 +149,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Maximize Build Space
-        if: ${{ github.event.inputs.SPACE_NOCLEAN == 'false' }}
-        uses: easimon/maximize-build-space@master
+      - name: Maximize Build Sp
+        if: ${{ github.event.inputs.SP_NOCLEAN == 'false' }}
+        uses: easimon/maximize-build-sp@master
         with:
           root-reserve-mb: 8192
           temp-reserve-mb: 2048
@@ -166,7 +166,7 @@ jobs:
           FILE: ${{ github.event.inputs.FILE }}
         run: |
           set -e
-          cd "$GITHUB_WORKSPACE"
+          cd "$GITHUB_WORKSP"
           if [[ "$FILE" =~ ^(.+)_([a-zA-Z])$ ]]; then
             FILE_CONF="${BASH_REMATCH[1]}"
           else
@@ -283,10 +283,10 @@ jobs:
           echo "Custom SUSFS_META: ${{ github.event.inputs.SUSFS_META }}"
           echo "Custom BUILD_TIME: ${{ github.event.inputs.BUILD_TIME }}"
           echo -n "BUILD_TIME Unicode: "
-          python3 -c "import unicodedata; print(''.join(f'\033[31mU+{ord(c):04X}\033[0m ' if c.isspace() or unicodedata.category(c)=='Cf' else f'U+{ord(c):04X} ' for c in '''${{ github.event.inputs.BUILD_TIME }}'''))"
+          python3 -c "import unicodedata; print(''.join(f'\033[31mU+{ord(c):04X}\033[0m ' if c.issp() or unicodedata.category(c)=='Cf' else f'U+{ord(c):04X} ' for c in '''${{ github.event.inputs.BUILD_TIME }}'''))"
           echo "Custom SUFFIX: ${{ github.event.inputs.SUFFIX }}"
           echo -n "SUFFIX Unicode: "
-          python3 -c "import unicodedata; print(''.join(f'\033[31mU+{ord(c):04X}\033[0m ' if c.isspace() or unicodedata.category(c)=='Cf' else f'U+{ord(c):04X} ' for c in '''${{ github.event.inputs.SUFFIX }}'''))"
+          python3 -c "import unicodedata; print(''.join(f'\033[31mU+{ord(c):04X}\033[0m ' if c.issp() or unicodedata.category(c)=='Cf' else f'U+{ord(c):04X} ' for c in '''${{ github.event.inputs.SUFFIX }}'''))"
           echo "Selected LSM: ${{ github.event.inputs.LSM }}"
           echo "Selected NETFILTER: ${{ github.event.inputs.NETFILTER }}"
           echo "Selected BBR_ECN: ${{ github.event.inputs.BBR_ECN }}"
